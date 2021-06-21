@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCourseBlocksTable extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('course_blocks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->text('description')->nullable();
+            $table->text('download_file_path')->nullable();
+            $table->unsignedInteger('estimated_length')->default(0)->comment('In seconds.');
+            $table->unsignedInteger('order')->nullable();
+            $table->dateTime('available_from')->nullable();
+            $table->nullableTimestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down()
+    {
+        Schema::dropIfExists('course_blocks');
+    }
+}
