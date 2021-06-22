@@ -69,7 +69,38 @@ class InstallSummitCommandTest extends TestCase
     /** @test */
     public function can_publish_everything()
     {
-        //
+        TestTime::freeze();
+
+        $this->cleanup();
+
+        require_once __DIR__.'/__fixtures__/Nova.php';
+
+        $this->artisan('summit:install')
+            ->expectsConfirmation("Publish config?", 'yes')
+            ->expectsConfirmation("Publish migrations?", 'yes')
+            ->expectsConfirmation("Publish Nova Resources?", 'yes');
+
+        // Config assertions
+        $this->assertFileExists(config_path('summit.php'));
+
+        // Migration assertions
+        $datePrefix = date('Y_m_d_His', time());
+
+        $migrations = collect(File::allFiles(database_path('migrations')))
+            ->map(function ($file) {
+                return $file->getFilename();
+            })
+            ->toArray();
+
+        $this->assertTrue(in_array("{$datePrefix}_create_course_block_user_table.php", $migrations));
+        $this->assertTrue(in_array("{$datePrefix}_create_course_blocks_table.php", $migrations));
+        $this->assertTrue(in_array("{$datePrefix}_create_courses_table.php", $migrations));
+        $this->assertTrue(in_array("{$datePrefix}_create_videos_table.php", $migrations));
+
+        // Nova assertions
+        $this->assertFileExists(app_path('Nova/Course.php'));
+        $this->assertFileExists(app_path('Nova/CourseBlock.php'));
+        $this->assertFileExists(app_path('Nova/Video.php'));
     }
 
     protected function cleanup()
