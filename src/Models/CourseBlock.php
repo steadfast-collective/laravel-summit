@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SteadfastCollective\Summit\Models\Concerns\HasAuthModel;
 use SteadfastCollective\Summit\Models\Concerns\HasVideo;
 
-class Course extends Model
+class CourseBlock extends Model
 {
     use HasVideo, HasAuthModel;
 
