@@ -11,9 +11,8 @@ class InstallSummitCommandTest extends TestCase
     {
         $this->artisan('summit:install')
             ->expectsConfirmation("Publish config?", 'yes')
-            ->expectsConfirmation("Publish migrations?", 'no')
-            ->expectsConfirmation("Publish Nova Resources?", 'no')
-            ->expectsOutput("Publishing complete.");
+            ->expectsConfirmation("Publish migrations?", 'no');
+            // ->expectsConfirmation("Publish Nova Resources?", 'no');
     }
 
     /** @test */
