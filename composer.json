@@ -33,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "steadfastcollective\\Summit\\Tests\\": "tests"
+            "SteadfastCollective\\Summit\\Tests\\": "tests"
         }
     },
     "scripts": {

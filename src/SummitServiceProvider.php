@@ -8,11 +8,13 @@ class SummitServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->registerPublishables();
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \SteadfastCollective\Summit\Console\Commands\InstallSummitCommand::class,
+            ]);
+        }
 
-        $this->commands([
-            Console\Commands\InstallSummitCommand::class,
-        ]);
+        $this->registerPublishables();
     }
 
     public function register()
