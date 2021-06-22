@@ -29,12 +29,16 @@ class Course extends Model
 
     public function scopePublished(Builder $query) : Builder
     {
-        return $query->where('published_date', '<=', now());
+        return $query
+            ->whereNotNull('publish_date')
+            ->where('publish_date', '<=', now());
     }
 
     public function scopeStarted(Builder $query) : Builder
     {
-        return $query->where('start_date', '<=', now());
+        return $query
+            ->whereNotNull('start_date')
+            ->where('start_date', '<=', now());
     }
 
     public function getReadableEstimatedLengthAttribute()
