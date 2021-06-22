@@ -10,8 +10,9 @@ class SummitServiceProvider extends ServiceProvider
     {
         $this->registerPublishables();
 
-        // Registering package commands.
-        // $this->commands([]);
+        $this->commands([
+            Console\Commands\InstallSummitCommand::class,
+        ]);
     }
 
     public function register()
