@@ -24,6 +24,7 @@ class Video extends Model
 
     /**
      * Get the Readable Size of a Video file.
+     *
      * @return string
      */
     public function getReadableSizeAttribute() : string
@@ -38,6 +39,7 @@ class Video extends Model
 
     /**
      * @param int $sizeInBytes
+     *
      * @return string Formatted Filesize, e.g. "113.24 MB".
      */
     protected function getHumanReadableSize(int $sizeInBytes) : string

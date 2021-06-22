@@ -14,11 +14,10 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->nullableMorphs('model');
-            $table->text('file_url');
+            $table->text('file_path');
             $table->string('file_name');
             $table->string('file_type')->nullable();
             $table->unsignedBigInteger('size');
-            $table->string('api_video_id')->index();
             $table->unsignedInteger('video_duration')->default(0)->comment('In seconds.');
             $table->nullableTimestamps();
         });

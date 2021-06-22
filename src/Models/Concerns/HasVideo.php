@@ -2,7 +2,6 @@
 
 namespace SteadfastCollective\Summit\Models\Concerns;
 
-// use App\Library\ApiVideo;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -34,18 +33,9 @@ trait HasVideo
      */
     public function detachVideo(Video $video = null)
     {
-        // TODO: API.VIDEO package
-        // $apiVideo = new ApiVideo;
-
         if (! is_null($video)) {
-            // $apiVideo->deleteVideo($video->api_video_id);
-
             return $video->delete();
         }
-
-        // $this->videos()->each(function ($video) use ($apiVideo) {
-        //     $apiVideo->deleteVideo($video->api_video_id);
-        // });
 
         return $this->videos()->delete();
     }

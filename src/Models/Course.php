@@ -2,11 +2,10 @@
 
 namespace SteadfastCollective\Summit\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use SteadfastCollective\Summit\Models\Concerns\HasFeaturedImage;
 
 class Course extends Model
@@ -40,6 +39,21 @@ class Course extends Model
 
     public function getReadableEstimatedLengthAttribute()
     {
-        return Carbon::parse($this->estimatedLength);
+        $seconds = $this->estimated_length;
+
+        $units = collect([
+            'hour'   => floor($seconds / 60 / 60),
+            'minute' => floor(($seconds % (60 * 60)) / 60),
+            'second' => $seconds % 60,
+        ]);
+
+        return $units
+            ->filter(function ($value) {
+                return $value > 0;
+            })
+            ->map(function ($item, $key) {
+                return "{$item} ".Str::plural($key, $item);
+            })
+            ->implode(' ');
     }
 }

@@ -2,16 +2,16 @@
 
 namespace SteadfastCollective\Summit\Models;
 
-use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use SteadfastCollective\Summit\Models\Concerns\HasAuthModel;
 use SteadfastCollective\Summit\Models\Concerns\HasVideo;
 
 class Course extends Model
 {
-    use HasVideo;
+    use HasVideo, HasAuthModel;
 
     protected $table = 'course_blocks';
     
@@ -35,23 +35,8 @@ class Course extends Model
             ->withTimestamps();
     }
 
-    /**
-     * Get the User model class to be used.
-     *
-     * @return mixed
-     *
-     * @throws Exception
-     */
-    protected function getAuthModelClass()
+    public function scopeAvailableFrom(Builder $query) : Builder
     {
-        if (config('summit.user_model')) {
-            return config('summit.user_model');
-        }
-
-        if (!is_null(config('auth.providers.users.model'))) {
-            return config('auth.providers.users.model');
-        }
-
-        throw new Exception('Could not determine the user model class.');
+        return $query->where('available_from', '>=', now());
     }
 }
