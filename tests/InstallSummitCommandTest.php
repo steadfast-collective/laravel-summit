@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Spatie\TestTime\TestTime;
 
+use function PHPUnit\Framework\directoryExists;
+
 class InstallSummitCommandTest extends TestCase
 {
     /** @test */
@@ -50,7 +52,18 @@ class InstallSummitCommandTest extends TestCase
     /** @test */
     public function can_publish_nova_resources()
     {
-        //
+        $this->cleanup();
+
+        require_once __DIR__.'/__fixtures__/Nova.php';
+
+        $this->artisan('summit:install')
+            ->expectsConfirmation("Publish config?", 'no')
+            ->expectsConfirmation("Publish migrations?", 'no')
+            ->expectsConfirmation("Publish Nova Resources?", 'yes');
+
+        $this->assertFileExists(app_path('Nova/Course.php'));
+        $this->assertFileExists(app_path('Nova/CourseBlock.php'));
+        $this->assertFileExists(app_path('Nova/Video.php'));
     }
 
     /** @test */
@@ -72,6 +85,11 @@ class InstallSummitCommandTest extends TestCase
                 File::delete($file->getPathname());
             });
 
-        // Cleanup Nova stuff... TODO
+        // Cleanup Nova stuff...
+        if (File::exists(app_path('Nova'))) {
+            File::delete(app_path('Nova/Course.php'));
+            File::delete(app_path('Nova/CourseBlock.php'));
+            File::delete(app_path('Nova/Video.php'));
+        }
     }
 }

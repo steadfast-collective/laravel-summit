@@ -52,7 +52,7 @@ class InstallSummitCommand extends Command
         }
 
         if (class_exists('Laravel\Nova\Nova') && $this->confirm("Publish Nova Resources?")) {
-            File::copyDirectory(__DIR__.'../../../stubs/app/Nova', base_path('app/Nova'));
+            File::copyDirectory(__DIR__.'/../../../stubs/app/Nova', app_path('Nova'));
         }
 
         $this->info("Publishing complete.");
