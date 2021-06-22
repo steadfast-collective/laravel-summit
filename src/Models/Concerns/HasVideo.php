@@ -5,6 +5,8 @@ namespace SteadfastCollective\Summit\Models\Concerns;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use SteadfastCollective\Summit\Events\AttachedVideo;
+use SteadfastCollective\Summit\Events\DetachedVideo;
 use SteadfastCollective\Summit\Models\Video;
 
 trait HasVideo
@@ -21,7 +23,9 @@ trait HasVideo
      */
     public function attachVideo(Video $video)
     {
-        return $this->videos()->save($video);
+        $this->videos()->save($video);
+
+        event(new AttachedVideo($video));
     }
 
     /**
@@ -31,13 +35,11 @@ trait HasVideo
      *
      * @throws Exception
      */
-    public function detachVideo(Video $video = null)
+    public function detachVideo(Video $video)
     {
-        if (! is_null($video)) {
-            return $video->delete();
-        }
+        $video->delete();
 
-        return $this->videos()->delete();
+        event(new DetachedVideo($video));
     }
 
     public function getVideos() : Collection
