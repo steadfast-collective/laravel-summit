@@ -41,6 +41,8 @@ class InstallSummitCommandTest extends TestCase
             })
             ->toArray();
 
+            // dump($datePrefix, $migrations);
+
         $this->assertTrue(in_array("{$datePrefix}_create_course_block_user_table.php", $migrations));
         $this->assertTrue(in_array("{$datePrefix}_create_course_blocks_table.php", $migrations));
         $this->assertTrue(in_array("{$datePrefix}_create_courses_table.php", $migrations));
