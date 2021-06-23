@@ -86,4 +86,19 @@ class CourseTest extends TestCase
             'title' => $courseBlock->title,
         ]);
     }
+
+    /** @test */
+    public function can_get_readable_estimated_length()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Checkout',
+            'slug' => 'how-to-use-stripe-checkout',
+            'description' => 'This is a course about Stripe Checkout.',
+            'estimated_length' => 3600,
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $this->assertSame($course->readable_estimated_length, '1 hour');
+    }
 }
