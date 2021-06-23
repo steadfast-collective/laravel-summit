@@ -11,7 +11,7 @@ class CourseTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_get_only_published_courses()
+    public function courses_have_a_published_scope()
     {
         $publishedCourse = Course::create([
             'name' => 'How to use Stripe Checkout',
@@ -36,7 +36,7 @@ class CourseTest extends TestCase
     }
 
     /** @test */
-    public function can_get_only_started_courses()
+    public function courses_have_a_started_scope()
     {
         $startedCourse = Course::create([
             'name' => 'How to use Stripe Checkout',
