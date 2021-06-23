@@ -52,7 +52,7 @@ class InstallSummitCommandTest extends TestCase
     {
         $this->cleanup();
 
-        require_once __DIR__.'/__fixtures__/Nova.php';
+        require_once __DIR__.'/../../__fixtures__/Nova.php';
 
         $this->artisan('summit:install')
             ->expectsConfirmation("Publish config?", 'no')
@@ -71,7 +71,7 @@ class InstallSummitCommandTest extends TestCase
 
         $this->cleanup();
 
-        require_once __DIR__.'/__fixtures__/Nova.php';
+        require_once __DIR__.'/../../__fixtures__/Nova.php';
 
         $this->artisan('summit:install')
             ->expectsConfirmation("Publish config?", 'yes')
