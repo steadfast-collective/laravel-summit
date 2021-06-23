@@ -1,9 +1,10 @@
 <?php
 
-namespace SteadfastCollective\Summit\Tests;
+namespace SteadfastCollective\Summit\Tests\Console\Commands;
 
 use Illuminate\Support\Facades\File;
 use Spatie\TestTime\TestTime;
+use SteadfastCollective\Summit\Tests\TestCase;
 
 class InstallSummitCommandTest extends TestCase
 {
