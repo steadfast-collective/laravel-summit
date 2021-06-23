@@ -16,7 +16,7 @@ class InstallSummitCommandTest extends TestCase
         $this->artisan('summit:install')
             ->expectsConfirmation("Publish config?", 'yes')
             ->expectsConfirmation("Publish migrations?", 'no');
-            // ->expectsConfirmation("Publish Nova Resources?", 'no');
+        // ->expectsConfirmation("Publish Nova Resources?", 'no');
 
         $this->assertFileExists(config_path('summit.php'));
     }
@@ -31,7 +31,6 @@ class InstallSummitCommandTest extends TestCase
         $this->artisan('summit:install')
             ->expectsConfirmation("Publish config?", 'no')
             ->expectsConfirmation("Publish migrations?", 'yes');
-            // ->expectsConfirmation("Publish Nova Resources?", 'no');
 
         $datePrefix = date('Y_m_d_His', time());
 
@@ -40,11 +39,6 @@ class InstallSummitCommandTest extends TestCase
                 return $file->getFilename();
             })
             ->toArray();
-
-            // dump($datePrefix, $migrations);
-
-        File::delete(__DIR__.'/test.json');
-        file_put_contents(__DIR__.'/test.json', json_encode(['datePrefix' => $datePrefix, 'migrations' => $migrations]));
 
         $this->assertTrue(in_array("{$datePrefix}_create_course_block_user_table.php", $migrations));
         $this->assertTrue(in_array("{$datePrefix}_create_course_blocks_table.php", $migrations));
