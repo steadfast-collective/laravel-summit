@@ -2,11 +2,8 @@
 
 namespace SteadfastCollective\Summit\Tests;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Spatie\TestTime\TestTime;
-
-use function PHPUnit\Framework\directoryExists;
 
 class InstallSummitCommandTest extends TestCase
 {
