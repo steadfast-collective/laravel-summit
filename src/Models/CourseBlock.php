@@ -35,8 +35,10 @@ class CourseBlock extends Model
             ->withTimestamps();
     }
 
-    public function scopeAvailableFrom(Builder $query) : Builder
+    public function scopeAvailable(Builder $query) : Builder
     {
-        return $query->where('available_from', '>=', now());
+        return $query
+            ->whereNotNull('available_from')
+            ->where('available_from', '<=', now());
     }
 }
