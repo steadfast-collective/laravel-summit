@@ -2,10 +2,11 @@
 
 namespace SteadfastCollective\Summit\Tests\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Tests\TestCase;
@@ -47,8 +48,9 @@ class CourseBlockTest extends TestCase
         ]);
 
         $user = User::create([
-            // 'name' => 'Test',
-            // 'email' => 'test@steadfastcollective.com',
+            'name' => 'Test',
+            'email' => 'test@steadfastcollective.com',
+            'password' => Hash::make('password'),
         ]);
 
         $courseBlock->users()->attach($user, [
