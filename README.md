@@ -1,52 +1,41 @@
-# Very short description of the package
+<p align="center"><h2>Summit</h2></p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/steadfast-collective/laravel-summit.svg?style=flat-square)](https://packagist.org/packages/steadfast-collective/laravel-summit)
-[![Total Downloads](https://img.shields.io/packagist/dt/steadfast-collective/laravel-summit.svg?style=flat-square)](https://packagist.org/packages/steadfast-collective/laravel-summit)
-![GitHub Actions](https://github.com/steadfast-collective/laravel-summit/actions/workflows/main.yml/badge.svg)
+<p align="center">
+    <a href="https://packagist.org/packages/steadfastcollective/summit">
+        <img src="https://img.shields.io/packagist/dt/steadfastcollective/summit" alt="Total Downloads">
+    </a>
+    <a href="https://packagist.org/packages/steadfastcollective/summit">
+        <img src="https://img.shields.io/packagist/v/steadfastcollective/summit" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/steadfastcollective/summit">
+        <img src="https://img.shields.io/packagist/l/steadfastcollective/summit" alt="License">
+    </a>
+</p>
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+## Introduction
 
-## Installation
+This package powers [Steadfast Collective](https://steadfastcollective.com)'s Summit platform and other apps. It provides a starting point for building video course applications.
 
-You can install the package via composer:
+## Documentation
 
-```bash
-composer require steadfast-collective/laravel-summit
+### Installation
+
+1. Install via Composer
+
+```
+composer require steadfastcollective/laravel-summit
 ```
 
-## Usage
+2. Run the `summit:install` command to publish Summit's files:
 
-```php
-// Usage description here
 ```
-
-### Testing
-
-```bash
-composer test
+php artisan summit:install
 ```
-
-### Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Before contributing, please read the our [contibutors guide](CONTRIBUTING.md).
 
-### Security
+## Security
 
-If you discover any security related issues, please email dev@steadfastcollective.com instead of using the issue tracker.
-
-## Credits
-
--   [Steadfast Collective](https://github.com/steadfast-collective)
--   [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
+If you discover any security related issues, please email [dev@steadfastcollective.com](mailto:dev@steadfastcollective.com) instead of using the issue tracker.
