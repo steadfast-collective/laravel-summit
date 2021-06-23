@@ -5,6 +5,7 @@ namespace SteadfastCollective\Summit\Tests\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use SteadfastCollective\Summit\Models\Course;
@@ -43,7 +44,7 @@ class CourseBlockTest extends TestCase
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
-            'title' => 'Eloquent',
+            'title' => 'Migrations',
             'estimated_length' => 50,
         ]);
 
@@ -63,15 +64,25 @@ class CourseBlockTest extends TestCase
     }
 
     /** @test */
-    public function can_scope_to_available_from()
+    public function course_block_morph_many_videos()
     {
-        //
-    }
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
 
-    /** @test */
-    public function course_block_has_many_videos()
-    {
-        //
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Notifications',
+            'estimated_length' => 50,
+        ]);
+
+        $video = $courseBlock->videos()->create([
+            'video_duration' => 50,
+        ]);
+
+        $this->assertTrue($courseBlock->videos() instanceof MorphMany);
+        $this->assertSame($courseBlock->videos->first()->id, $video->id);
     }
 
     /** @test */
