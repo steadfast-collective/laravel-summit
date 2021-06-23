@@ -1,9 +1,11 @@
 <?php
 
+namespace SteadfastCollective\Summit\Tests\Models;
+
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Tests\TestCase;
 
-class CoursesTest extends TestCase
+class CourseTest extends TestCase
 {
     /** @test */
     public function can_get_published_courses()
@@ -29,7 +31,7 @@ class CoursesTest extends TestCase
         $this->assertCount(1, $publishedCourses = Course::published()->get());
         $this->assertSame($publishedCourse->id, $publishedCourses->first()->id);
     }
-    
+
     /** @test */
     public function can_get_current_courses()
     {
