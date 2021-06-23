@@ -2,14 +2,31 @@
 
 namespace SteadfastCollective\Summit\Tests\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Tests\TestCase;
 
 class CourseBlockTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
-    public function couse_block_belongs_to_course()
+    public function course_block_belongs_to_course()
     {
-        //
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Eloquent',
+            'estimated_length' => 50,
+        ]);
+
+        $this->assertTrue($courseBlock->course() instanceof BelongsTo);
+        $this->assertSame($courseBlock->id, $course->id);
     }
 
     /** @test */
