@@ -59,4 +59,31 @@ class CourseTest extends TestCase
         $this->assertCount(1, $startedCourses = Course::started()->get());
         $this->assertSame($startedCourse->id, $startedCourses->first()->id);
     }
+
+    /** @test */
+    public function courses_can_have_course_blocks()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Checkout',
+            'slug' => 'how-to-use-stripe-checkout',
+            'description' => 'This is a course about Stripe Checkout.',
+            'estimated_length' => 3600,
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Installing Stripe CLI',
+            'description' => 'How to get started with Stripe development using the Stripe CLI.',
+            'download_file_path' => null,
+            'estimated_length' => 600,
+            'order' => 1,
+            'available_from' => now(),
+        ]);
+
+        $this->assertDatabaseHas('course_blocks', [
+            'course_id' => $course->id,
+            'title' => $courseBlock->title,
+        ]);
+    }
 }
