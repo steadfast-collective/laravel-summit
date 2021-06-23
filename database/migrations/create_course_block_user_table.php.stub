@@ -13,7 +13,7 @@ class CreateCourseBlockUserTable extends Migration
     {
         Schema::create('course_block_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->foreignId('course_block_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->dateTime('started_at')->nullable();
             $table->dateTime('finished_at')->nullable();
