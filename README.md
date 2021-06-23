@@ -1,4 +1,4 @@
-<p align="center"><h2>Summit</h2></p>
+<p align="center"><h1>Summit</h1></p>
 
 <p align="center">
     <a href="https://packagist.org/packages/steadfastcollective/summit">
