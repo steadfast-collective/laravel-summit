@@ -3,6 +3,8 @@
 namespace SteadfastCollective\Summit\Tests\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
@@ -33,7 +35,29 @@ class CourseBlockTest extends TestCase
     /** @test */
     public function course_block_belongs_to_many_users()
     {
-        //
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Eloquent',
+            'estimated_length' => 50,
+        ]);
+
+        $user = User::create([
+            // 'name' => 'Test',
+            // 'email' => 'test@steadfastcollective.com',
+        ]);
+
+        $courseBlock->users()->attach($user, [
+            'started_at' => now(),
+            'progress' => 25,
+        ]);
+
+        $this->assertTrue($courseBlock->users() instanceof BelongsToMany);
+        $this->assertSame($courseBlock->users->first()->id, $user->id);
     }
 
     /** @test */

@@ -14,7 +14,7 @@ class CourseBlock extends Model
     use HasVideo, HasAuthModel;
 
     protected $table = 'course_blocks';
-    
+
     protected $guarded = [];
 
     protected $casts = [
@@ -23,26 +23,26 @@ class CourseBlock extends Model
         'available_from' => 'datetime',
     ];
 
-    public function course() : BelongsTo
+    public function course(): BelongsTo
     {
         return $this->belongsTo(config('summit.course_model'));
     }
 
-    public function users() : BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany($this->getAuthModelClass())
             ->withPivot('started_at', 'finished_at', 'progress')
             ->withTimestamps();
     }
 
-    public function scopeAvailable(Builder $query) : Builder
+    public function scopeAvailable(Builder $query): Builder
     {
         return $query
             ->whereNotNull('available_from')
             ->where('available_from', '<=', now());
     }
 
-    public function scopeAvailableFrom(Builder $query, $dateTime) : Builder
+    public function scopeAvailableFrom(Builder $query, $dateTime): Builder
     {
         return $query
             ->whereNotNull('available_from')
