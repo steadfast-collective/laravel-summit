@@ -5,8 +5,6 @@ namespace SteadfastCollective\Summit\Tests\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use SteadfastCollective\Summit\Models\Course;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Tests\TestCase;
 
