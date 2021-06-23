@@ -22,13 +22,13 @@ This package powers [Steadfast Collective](https://steadfastcollective.com)'s Su
 
 1. Install via Composer
 
-```
+```s
 composer require steadfastcollective/laravel-summit
 ```
 
 2. Run the `summit:install` command to publish Summit's files:
 
-```
+```s
 php artisan summit:install
 ```
 
