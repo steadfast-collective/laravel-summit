@@ -77,18 +77,26 @@ class VideoTest extends TestCase
             'video_duration' => 25,
         ]);
 
-        dd($video->duration_for_humans);
+        $this->assertSame($video->duration_for_humans, '25 seconds');
     }
 
     /** @test */
     public function can_get_duration_for_humans_where_length_is_in_minutes()
     {
+        $video = Video::create([
+            'video_duration' => 95,
+        ]);
 
+        $this->assertSame($video->duration_for_humans, '1 minute 35 seconds');
     }
 
     /** @test */
     public function can_get_duration_for_humans_where_length_is_in_hours()
     {
+        $video = Video::create([
+            'video_duration' => 6300,
+        ]);
 
+        $this->assertSame($video->duration_for_humans, '1 hour 45 minutes');
     }
 }
