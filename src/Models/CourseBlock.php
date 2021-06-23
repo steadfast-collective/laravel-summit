@@ -41,4 +41,11 @@ class CourseBlock extends Model
             ->whereNotNull('available_from')
             ->where('available_from', '<=', now());
     }
+
+    public function scopeAvailableFrom(Builder $query, $dateTime) : Builder
+    {
+        return $query
+            ->whereNotNull('available_from')
+            ->where('available_from', '>=', $dateTime);
+    }
 }
