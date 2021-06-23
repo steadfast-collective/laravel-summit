@@ -73,7 +73,11 @@ class VideoTest extends TestCase
     /** @test */
     public function can_get_duration_for_humans_where_length_is_in_seconds()
     {
+        $video = Video::create([
+            'video_duration' => 25,
+        ]);
 
+        dd($video->duration_for_humans);
     }
 
     /** @test */
