@@ -11,7 +11,7 @@ class CourseTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_get_published_courses()
+    public function can_get_only_published_courses()
     {
         $publishedCourse = Course::create([
             'name' => 'How to use Stripe Checkout',
@@ -36,9 +36,9 @@ class CourseTest extends TestCase
     }
 
     /** @test */
-    public function can_get_current_courses()
+    public function can_get_only_started_courses()
     {
-        $currentCourse = Course::create([
+        $startedCourse = Course::create([
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
@@ -56,7 +56,7 @@ class CourseTest extends TestCase
             'publish_date' => now(),
         ]);
 
-        $this->assertCount(1, $currentCourses = Course::started()->get());
-        $this->assertSame($currentCourse->id, $currentCourses->first()->id);
+        $this->assertCount(1, $startedCourses = Course::started()->get());
+        $this->assertSame($startedCourse->id, $startedCourses->first()->id);
     }
 }
