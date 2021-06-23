@@ -43,6 +43,9 @@ class InstallSummitCommandTest extends TestCase
 
             // dump($datePrefix, $migrations);
 
+        File::delete(__DIR__.'/test.json');
+        file_put_contents(__DIR__.'/test.json', json_encode(['datePrefix' => $datePrefix, 'migrations' => $migrations]));
+
         $this->assertTrue(in_array("{$datePrefix}_create_course_block_user_table.php", $migrations));
         $this->assertTrue(in_array("{$datePrefix}_create_course_blocks_table.php", $migrations));
         $this->assertTrue(in_array("{$datePrefix}_create_courses_table.php", $migrations));
