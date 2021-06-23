@@ -10,15 +10,6 @@ class CourseTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        // require_once __DIR__ . '/../../database/migrations/create_courses_table.php.stub';
-
-        // (new \CreateCoursesTable())->up();
-    }
-
     /** @test */
     public function can_get_published_courses()
     {
