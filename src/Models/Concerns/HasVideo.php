@@ -75,9 +75,16 @@ trait HasVideo
 
         // TODO: use a different config variable to decide if we want to use api.video
         if (config('summit.videos_disk') === 'API_VIDEO') {
-
+            //
         }
 
-        Storage::disk(config('summit.videos_disk'))->copy();
+        // Otherwise, assume we already have the file uploaded somewhere & just copy it instead (useful for Vapor)
+        Storage::disk(config('summit.videos_disk'))->copy($file, $filePath = "{$path}/{$file}");
+
+        return $this->videos()->create([
+            'file_path' => $filePath,
+            'file_name' => $file,
+            'file_type' => Storage::disk(config('summit.videos_disk'))->mimeType($filePath),
+        ]);
     }
 }
