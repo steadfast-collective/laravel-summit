@@ -34,14 +34,4 @@ class CourseBlockProgress extends Pivot
     {
         return $this->belongsTo(User::class);
     }
-
-    public function scopeStarted(Builder $query): Builder
-    {
-        return $query->whereNotNull('started_at');
-    }
-
-    public function scopeFinished(Builder $query): Builder
-    {
-        return $query->whereNotNull('finished_at');
-    }
 }

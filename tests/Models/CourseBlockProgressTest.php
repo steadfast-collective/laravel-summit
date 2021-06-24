@@ -101,16 +101,4 @@ class CourseBlockProgressTest extends TestCase
 
         $this->assertSame((int) $courseBlockProgress->pivot->user_id, $user->id);
     }
-
-    /** @test */
-    public function can_scope_to_started_progress_entries()
-    {
-        //
-    }
-
-    /** @test */
-    public function can_scope_to_finished_progress_entries()
-    {
-        //
-    }
 }
