@@ -10,7 +10,7 @@ class SummitServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \SteadfastCollective\Summit\Console\Commands\InstallSummitCommand::class,
+                Console\Commands\InstallSummitCommand::class,
             ]);
         }
 
