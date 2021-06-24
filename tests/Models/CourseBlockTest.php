@@ -3,13 +3,16 @@
 namespace SteadfastCollective\Summit\Tests\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Spatie\TestTime\TestTime;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
+use SteadfastCollective\Summit\Models\Video;
 use SteadfastCollective\Summit\Tests\TestCase;
 
 class CourseBlockTest extends TestCase
@@ -88,33 +91,143 @@ class CourseBlockTest extends TestCase
     /** @test */
     public function can_attach_video_to_course_block()
     {
-        //
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Broadcasting',
+            'estimated_length' => 50,
+        ]);
+
+        $video = Video::create([
+            'video_duration' => 50,
+        ]);
+
+        $attachVideo = $courseBlock->attachVideo($video);
+
+        $this->assertSame($courseBlock->videos->first()->id, $video->id);
     }
 
     /** @test */
     public function can_detach_video_from_course_block()
     {
-        //
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Events',
+            'estimated_length' => 50,
+        ]);
+
+        $video = $courseBlock->videos()->create([
+            'video_duration' => 50,
+        ]);
+
+        $this->assertSame($courseBlock->videos->count(), 1);
+        $this->assertSame($courseBlock->videos->first()->id, $video->id);
+
+        $detachVideo = $courseBlock->detachVideo($video);
+
+        $this->assertSame($courseBlock->videos()->count(), 0);
+        $this->assertNull($courseBlock->videos()->get()->first());
     }
 
     /** @test */
     public function can_get_all_videos()
     {
-        //
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Forge',
+            'estimated_length' => 50,
+        ]);
+
+        $videoOne = $courseBlock->videos()->create([
+            'video_duration' => 25,
+        ]);
+
+        $videoTwo = $courseBlock->videos()->create([
+            'video_duration' => 25,
+        ]);
+
+        $getVideos = $courseBlock->getVideos();
+
+        $this->assertTrue($getVideos instanceof Collection);
+        $this->assertSame($getVideos->count(), 2);
+
+        $this->assertTrue(in_array($videoOne->id, $getVideos->pluck('id')->toArray()));
+        $this->assertTrue(in_array($videoTwo->id, $getVideos->pluck('id')->toArray()));
     }
 
     /** @test */
     public function can_get_first_video()
     {
-        //
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Horizon',
+            'estimated_length' => 50,
+        ]);
+
+        $videoOne = $courseBlock->videos()->create([
+            'video_duration' => 25,
+            'created_at' => now()->subMinute(),
+        ]);
+
+        $videoTwo = $courseBlock->videos()->create([
+            'video_duration' => 25,
+            'created_at' => now(),
+        ]);
+
+        $getFirstVideo = $courseBlock->getFirstVideo();
+
+        $this->assertTrue($getFirstVideo instanceof Video);
+        $this->assertSame($getFirstVideo->id, $videoOne->id);
     }
 
     /** @test */
     public function can_get_last_video()
     {
-        //
-    }
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
 
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Telescope',
+            'estimated_length' => 50,
+        ]);
+
+        $videoOne = $courseBlock->videos()->create([
+            'video_duration' => 25,
+            'created_at' => now()->subMinute(),
+        ]);
+
+        $videoTwo = $courseBlock->videos()->create([
+            'video_duration' => 25,
+            'created_at' => now(),
+        ]);
+
+        $getLastVideo = $courseBlock->getLastVideo();
+
+        $this->assertTrue($getLastVideo instanceof Video);
+        $this->assertSame($getLastVideo->id, $videoTwo->id);
+    }
 
     public function course_blocks_have_an_available_scope()
     {
