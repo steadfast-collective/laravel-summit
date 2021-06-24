@@ -20,11 +20,6 @@ class SummitServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/summit.php', 'summit');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('summit', function () {
-            return new Summit;
-        });
     }
 
     protected function registerPublishables() : void
