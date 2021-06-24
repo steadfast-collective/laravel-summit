@@ -11,7 +11,7 @@ class CourseTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_get_published_courses()
+    public function courses_have_a_published_scope()
     {
         $publishedCourse = Course::create([
             'name' => 'How to use Stripe Checkout',
@@ -36,9 +36,9 @@ class CourseTest extends TestCase
     }
 
     /** @test */
-    public function can_get_current_courses()
+    public function courses_have_a_started_scope()
     {
-        $currentCourse = Course::create([
+        $startedCourse = Course::create([
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
@@ -56,7 +56,49 @@ class CourseTest extends TestCase
             'publish_date' => now(),
         ]);
 
-        $this->assertCount(1, $currentCourses = Course::started()->get());
-        $this->assertSame($currentCourse->id, $currentCourses->first()->id);
+        $this->assertCount(1, $startedCourses = Course::started()->get());
+        $this->assertSame($startedCourse->id, $startedCourses->first()->id);
+    }
+
+    /** @test */
+    public function courses_can_have_course_blocks()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Checkout',
+            'slug' => 'how-to-use-stripe-checkout',
+            'description' => 'This is a course about Stripe Checkout.',
+            'estimated_length' => 3600,
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Installing Stripe CLI',
+            'description' => 'How to get started with Stripe development using the Stripe CLI.',
+            'download_file_path' => null,
+            'estimated_length' => 600,
+            'order' => 1,
+            'available_from' => now(),
+        ]);
+
+        $this->assertDatabaseHas('course_blocks', [
+            'course_id' => $course->id,
+            'title' => $courseBlock->title,
+        ]);
+    }
+
+    /** @test */
+    public function can_get_readable_estimated_length()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Checkout',
+            'slug' => 'how-to-use-stripe-checkout',
+            'description' => 'This is a course about Stripe Checkout.',
+            'estimated_length' => 3600,
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $this->assertSame($course->readable_estimated_length, '1 hour');
     }
 }
