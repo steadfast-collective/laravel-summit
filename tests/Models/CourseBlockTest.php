@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Models\Video;
@@ -226,6 +228,49 @@ class CourseBlockTest extends TestCase
 
         $this->assertTrue($getLastVideo instanceof Video);
         $this->assertSame($getLastVideo->id, $videoTwo->id);
+    }
+
+    /** @test */
+    public function can_get_upload_video_from_uploaded_file()
+    {
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile);
+
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+    }
+
+    /** @test */
+    public function can_get_upload_video_from_uploaded_file_with_specific_path()
+    {
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile, 'course-videos');
+
+        $this->assertStringContainsString('course-videos', $uploadVideo->file_path);
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
     }
 
     public function course_blocks_have_an_available_scope()
