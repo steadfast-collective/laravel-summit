@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Spatie\TestTime\TestTime;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Models\Video;

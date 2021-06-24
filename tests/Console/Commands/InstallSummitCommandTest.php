@@ -16,7 +16,6 @@ class InstallSummitCommandTest extends TestCase
         $this->artisan('summit:install')
             ->expectsConfirmation("Publish config?", 'yes')
             ->expectsConfirmation("Publish migrations?", 'no');
-        // ->expectsConfirmation("Publish Nova Resources?", 'no');
 
         $this->assertFileExists(config_path('summit.php'));
     }

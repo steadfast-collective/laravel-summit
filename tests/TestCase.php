@@ -2,7 +2,6 @@
 
 namespace SteadfastCollective\Summit\Tests;
 
-use CreateUsersTable;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use SteadfastCollective\Summit\SummitServiceProvider;
 
@@ -22,6 +21,6 @@ class TestCase extends OrchestraTestCase
 
         $app['config']->set('auth.providers.users.model', \App\Models\User::class);
 
-        (new CreateUsersTable)->up();
+        (new \CreateUsersTable)->up();
     }
 }
