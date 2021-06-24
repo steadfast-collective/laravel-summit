@@ -2,13 +2,14 @@
 
 namespace SteadfastCollective\Summit\Models;
 
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Video extends Model
 {
     protected $table = 'videos';
-    
+
     protected $guarded = [];
 
     protected $casts = [
@@ -34,7 +35,7 @@ class Video extends Model
 
     public function getDurationForHumansAttribute()
     {
-        return \Carbon\CarbonInterval::seconds($this->video_duration)->cascade()->forHumans();
+        return CarbonInterval::seconds($this->video_duration)->cascade()->forHumans();
     }
 
     /**
@@ -47,23 +48,23 @@ class Video extends Model
         if ($sizeInBytes >= 1073741824) {
             return number_format($sizeInBytes / 1073741824, 2).' GB';
         }
-        
+
         if ($sizeInBytes >= 1048576) {
             return number_format($sizeInBytes / 1048576, 2).' MB';
         }
-        
+
         if ($sizeInBytes >= 1024) {
             return number_format($sizeInBytes / 1024, 2).' KB';
         }
-        
+
         if ($sizeInBytes > 1) {
             return $sizeInBytes.' bytes';
         }
-        
+
         if ($sizeInBytes == 1) {
             return '1 byte';
         }
-       
+
         return '0 bytes';
     }
 }

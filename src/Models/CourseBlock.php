@@ -31,6 +31,7 @@ class CourseBlock extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany($this->getAuthModelClass())
+            ->using(CourseBlockProgress::class)
             ->withPivot('started_at', 'finished_at', 'progress')
             ->withTimestamps();
     }
