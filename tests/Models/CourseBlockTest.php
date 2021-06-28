@@ -233,7 +233,7 @@ class CourseBlockTest extends TestCase
     }
 
     /** @test */
-    public function can_get_upload_video_from_uploaded_file()
+    public function can_get_upload_video_to_filesystem_from_uploaded_file()
     {
         Config::set('summit.video_storage_driver', FilesystemDriver::class);
         Config::set('summit.video_storage_disk', 'public');
@@ -257,7 +257,7 @@ class CourseBlockTest extends TestCase
     }
 
     /** @test */
-    public function can_get_upload_video_from_uploaded_file_with_specific_path()
+    public function can_get_upload_video_to_filesystem_from_uploaded_file_with_specific_path()
     {
         Config::set('summit.video_storage_driver', FilesystemDriver::class);
         Config::set('summit.video_storage_disk', 'public');
@@ -279,6 +279,32 @@ class CourseBlockTest extends TestCase
 
         $this->assertStringContainsString('course-videos', $uploadVideo->file_path);
         $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+    }
+
+    /** @test */
+    public function can_get_upload_video_to_filesystem_from_uploaded_file_with_file_type()
+    {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile, null, 'some/random-type');
+
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+
+        $this->assertSame($uploadVideo->file_type, 'some/random-type');
     }
 
     public function course_blocks_have_an_available_scope()

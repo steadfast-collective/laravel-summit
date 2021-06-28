@@ -10,7 +10,7 @@ use SteadfastCollective\Summit\Models\Video;
 
 class FilesystemDriver implements VideoStorageDriver
 {
-    public function upload(CourseBlock $courseBlock, $file, string $path = '', string $type = ''): Video
+    public function upload(CourseBlock $courseBlock, $file, $path = null, $type = null): Video
     {
         if ($file instanceof UploadedFile) {
             $filePath = $file->storeAs("{$path}/{$file->getFilename()}", $file->getFilename(), [
@@ -19,7 +19,7 @@ class FilesystemDriver implements VideoStorageDriver
 
             return $courseBlock->videos()->create([
                 'file_path' => $filePath,
-                'file_type' => $file->getMimeType(),
+                'file_type' => $type ?? $file->getMimeType(),
             ]);
         }
 
@@ -28,7 +28,7 @@ class FilesystemDriver implements VideoStorageDriver
 
         return $courseBlock->videos()->create([
             'file_path' => $filePath,
-            'file_type' => Storage::disk(config('summit.videos_disk'))->mimeType($filePath),
+            'file_type' => $type ?? Storage::disk(config('summit.videos_disk'))->mimeType($filePath),
         ]);
     }
 }

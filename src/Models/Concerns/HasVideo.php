@@ -58,9 +58,9 @@ trait HasVideo
      *
      * @return Video
      */
-    public function uploadVideo($file, string $path = ''): Video
+    public function uploadVideo($file, $path = null, $type = null): Video
     {
         return resolve(config('summit.video_storage_driver'))
-            ->upload($this, $file, $path);
+            ->upload($this, $file, $path, $type);
     }
 }

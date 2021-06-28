@@ -7,5 +7,5 @@ use SteadfastCollective\Summit\Models\Video;
 
 interface VideoStorageDriver
 {
-    public function upload(CourseBlock $courseBlock, $file, string $path = '', string $type = ''): Video;
+    public function upload(CourseBlock $courseBlock, $file, $path = null, $type = null): Video;
 }

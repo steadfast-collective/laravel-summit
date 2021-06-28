@@ -9,7 +9,7 @@ use SteadfastCollective\Summit\Models\Video;
 
 class ApiVideoDriver implements VideoStorageDriver
 {
-    public function upload(CourseBlock $courseBlock, $file, string $path = '', string $type = ''): Video
+    public function upload(CourseBlock $courseBlock, $file, $path = null, $type = null): Video
     {
         if ($file instanceof UploadedFile) {
             throw new \Exception("The api.video storage driver can't upload an `UploadedFile`. Please pass in a Video ID instead.");
