@@ -32,10 +32,6 @@ composer require steadfastcollective/laravel-summit
 php artisan summit:install
 ```
 
-### Configuration
-
-TODO
-
 ### Migrations
 
 During installation, you'll get the option to publish Summit's migrations. These migrations create a few tables (`courses`, `course_blocks` and `videos`). These tables are used for some of Summit's built-in [models](#models). Feel free to add any columns to these as you wish.
