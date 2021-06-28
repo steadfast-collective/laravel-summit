@@ -34,6 +34,48 @@ php artisan summit:install
 
 ### Configuration
 
+TODO
+
+### Migrations
+
+During installation, you'll get the option to publish Summit's migrations. These migrations create a few tables (`courses`, `course_blocks` and `videos`). These tables are used for some of Summit's built-in [models](#models). Feel free to add any columns to these as you wish.
+
+### Extending Models
+
+Summit provides a set of models for things like Courses, Course Blocks and Videos. By default, these models live inside the Summit package. However, there may be cases where you want to add fillable properties, attributes or simply just want to override something we've done. And that's perfectly okay!
+
+The recommended approach to doing this would be to create your own model file, like `app/Models/Course.php`. Inside that, instead of extending the `Model` class provided by Eloquent, extend the built-in Summit model. There's a demo of this below:
+
+```php
+<?php
+
+namespace App\Models;
+
+use SteadfastCollective\Summit\Models\Course as SummitCourse;
+
+class Course extends SummitCourse
+{
+    protected $appends = [
+        'hello_world',
+    ];
+
+    public function getHelloWorldAttribute()
+    {
+        return 'Hello World!';
+    }
+}
+```
+
+### Laravel Nova
+
+If you're using Laravel Nova within your application, you can optionally publish our base Nova resources. They're included as part of the `summit:install` command. However, they will only be shown if we detect Nova is installed.
+
+```
+php artisan summit:install
+```
+
+The Nova Resources will be published into your `app/Nova` directory. Once published, you can customise them to your heart's content.
+
 ### Video Storage
 
 There's a couple of different places you can store your videos. Out of the box, we currently support uploading to [Laravel's Filesystem](https://laravel.com/docs/master/filesystem) and to [api.video](https://api.video/).
