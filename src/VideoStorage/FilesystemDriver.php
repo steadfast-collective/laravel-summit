@@ -10,7 +10,7 @@ use SteadfastCollective\Summit\Models\Video;
 
 class FilesystemDriver implements VideoStorageDriver
 {
-    public function upload(CourseBlock $courseBlock, $file, string $path = ''): Video
+    public function upload(CourseBlock $courseBlock, $file, string $path = '', string $type = ''): Video
     {
         if ($file instanceof UploadedFile) {
             $filePath = $file->storeAs("{$path}/{$file->getFilename()}", $file->getFilename(), [

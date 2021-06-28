@@ -3,14 +3,13 @@
 namespace SteadfastCollective\Summit\VideoStorage;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use SteadfastCollective\Summit\Contracts\VideoStorageDriver;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Models\Video;
 
 class ApiVideoDriver implements VideoStorageDriver
 {
-    public function upload(CourseBlock $courseBlock, $file, string $path = ''): Video
+    public function upload(CourseBlock $courseBlock, $file, string $path = '', string $type = ''): Video
     {
         if ($file instanceof UploadedFile) {
             throw new \Exception("The api.video storage driver can't upload an `UploadedFile`. Please pass in a Video ID instead.");
@@ -24,8 +23,8 @@ class ApiVideoDriver implements VideoStorageDriver
 
         // TODO
         return Video::create([
-            'file_path' => null,
-            'file_type' => null,
+            'file_path' => $getVideo->videoId,
+            'file_type' => $type ?? null,
             'size' => null,
             'video_duration' => null,
         ]);
