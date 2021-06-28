@@ -233,7 +233,7 @@ class CourseBlockTest extends TestCase
     }
 
     /** @test */
-    public function can_get_upload_video_to_filesystem_from_uploaded_file()
+    public function can_upload_video_to_filesystem_from_uploaded_file()
     {
         Config::set('summit.video_storage_driver', FilesystemDriver::class);
         Config::set('summit.video_storage_disk', 'public');
@@ -257,7 +257,7 @@ class CourseBlockTest extends TestCase
     }
 
     /** @test */
-    public function can_get_upload_video_to_filesystem_from_uploaded_file_with_specific_path()
+    public function can_upload_video_to_filesystem_from_uploaded_file_with_specific_path()
     {
         Config::set('summit.video_storage_driver', FilesystemDriver::class);
         Config::set('summit.video_storage_disk', 'public');
@@ -282,7 +282,7 @@ class CourseBlockTest extends TestCase
     }
 
     /** @test */
-    public function can_get_upload_video_to_filesystem_from_uploaded_file_with_file_type()
+    public function can_upload_video_to_filesystem_from_uploaded_file_with_file_type()
     {
         Config::set('summit.video_storage_driver', FilesystemDriver::class);
         Config::set('summit.video_storage_disk', 'public');
