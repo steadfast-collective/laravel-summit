@@ -1,7 +1,5 @@
 # Changelog
 
-All notable changes to `laravel-summit` will be documented in this file
+## v1.0.0 (2021-06-28)
 
-## 1.0.0 - 201X-XX-XX
-
-- initial release
+* Initial release
