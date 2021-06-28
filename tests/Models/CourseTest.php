@@ -165,4 +165,31 @@ class CourseTest extends TestCase
         $this->assertIsString($progress);
         $this->assertSame($progress, '0%');
     }
+
+    /** @test */
+    public function can_get_chapters_count_attribute()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Billing',
+            'slug' => 'how-to-use-stripe-billing',
+            'description' => 'This is a course about Stripe Billing.',
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $courseBlockOne = $course->courseBlocks()->create([
+            'title' => 'Creating products',
+            'type' => 'CHAPTER',
+        ]);
+
+        $courseBlockTwo = $course->courseBlocks()->create([
+            'title' => 'Setting up for customers',
+            'type' => 'INTRO',
+        ]);
+
+        $chaptersCount = $course->chapters_count;
+
+        $this->assertIsInt($chaptersCount);
+        $this->assertSame($chaptersCount, 1);
+    }
 }

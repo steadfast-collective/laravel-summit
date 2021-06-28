@@ -86,4 +86,9 @@ class Course extends Model
     {
         return $this->courseBlocks()->sum('estimated_length');
     }
+
+    public function getChaptersCountAttribute()
+    {
+        return $this->courseBlocks()->where('type', 'CHAPTER')->count();
+    }
 }
