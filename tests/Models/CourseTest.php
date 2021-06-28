@@ -2,7 +2,10 @@
 
 namespace SteadfastCollective\Summit\Tests\Models;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Tests\TestCase;
 
@@ -100,5 +103,75 @@ class CourseTest extends TestCase
         ]);
 
         $this->assertSame($course->readable_estimated_length, '1 hour');
+    }
+
+    /** @test */
+    public function can_get_progress_percentage()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Billing',
+            'slug' => 'how-to-use-stripe-billing',
+            'description' => 'This is a course about Stripe Billing.',
+            'estimated_length' => 3600,
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $courseBlockOne = $course->courseBlocks()->create([
+            'title' => 'Creating products',
+            'estimated_length' => 1800,
+        ]);
+
+        $courseBlockTwo = $course->courseBlocks()->create([
+            'title' => 'Setting up for customers',
+            'estimated_length' => 1800,
+        ]);
+
+        $user = User::create([
+            'name' => 'Test',
+            'email' => 'test@steadfastcollective.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $courseBlockOne->users()->attach($user, [
+            'started_at' => now(),
+            'progress' => 25,
+            'finished_at' => now(),
+        ]);
+
+        Auth::setUser($user);
+
+        $progress = $course->progress_percentage;
+
+        $this->assertIsString($progress);
+        $this->assertSame($progress, '50%');
+    }
+
+    /** @test */
+    public function can_get_progress_percentage_as_guest()
+    {
+        $course = Course::create([
+            'name' => 'How to use Stripe Billing',
+            'slug' => 'how-to-use-stripe-billing',
+            'description' => 'This is a course about Stripe Billing.',
+            'estimated_length' => 3600,
+            'start_date' => now(),
+            'publish_date' => now(),
+        ]);
+
+        $courseBlockOne = $course->courseBlocks()->create([
+            'title' => 'Creating products',
+            'estimated_length' => 1800,
+        ]);
+
+        $courseBlockTwo = $course->courseBlocks()->create([
+            'title' => 'Setting up for customers',
+            'estimated_length' => 1800,
+        ]);
+
+        $progress = $course->progress_percentage;
+
+        $this->assertIsString($progress);
+        $this->assertSame($progress, '0%');
     }
 }

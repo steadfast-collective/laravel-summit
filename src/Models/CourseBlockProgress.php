@@ -3,11 +3,12 @@
 namespace SteadfastCollective\Summit\Models;
 
 use Carbon\CarbonInterval;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CourseBlockProgress extends Pivot
 {
+    protected $table = 'course_block_user';
+
     protected $casts = [
         'started_at' => 'datetime',
         'finished_at' => 'datetime',

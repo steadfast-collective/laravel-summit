@@ -5,6 +5,7 @@ namespace SteadfastCollective\Summit\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use SteadfastCollective\Summit\Models\Concerns\HasFeaturedImage;
 
@@ -13,7 +14,7 @@ class Course extends Model
     use HasFeaturedImage;
 
     protected $table = 'courses';
-    
+
     protected $guarded = [];
 
     protected $casts = [
@@ -59,5 +60,26 @@ class Course extends Model
                 return "{$item} ".Str::plural($key, $item);
             })
             ->implode(' ');
+    }
+
+    public function getProgressPercentageAttribute(): string
+    {
+        if (Auth::guest()) {
+            return '0%';
+        }
+
+        $totalCourseBlocks = $this->courseBlocks()->count();
+
+        $finishedCourseBlocks = CourseBlockProgress::query()
+            ->whereHas('courseBlock', function ($query) {
+                return $query->where('course_id', $this->id);
+            })
+            ->where('user_id', Auth::user()->id)
+            ->where('finished_at', '!=', null)
+            ->count();
+
+        $progress = ($finishedCourseBlocks / $totalCourseBlocks) * 100;
+
+        return round($progress) . '%';
     }
 }
