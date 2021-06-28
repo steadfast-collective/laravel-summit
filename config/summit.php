@@ -42,15 +42,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Videos Disk
+    | Video Storage
     |--------------------------------------------------------------------------
     |
-    | Where should we store the videos for your courses? By default, we'll
-    | use the default Filesystem from your `filesystems.php` config. If you're
-    | using Laravel Vapor, we'll presume you're wanting to use S3.
+    | Where should we retrieve and upload your videos? We have built-in
+    | support for Laravel's Filesystem and api.video
     |
     */
 
-    'videos_disk' => env('FILESYSTEM_DRIVER', 'public'),
+    'video_storage_driver' => \SteadfastCollective\Summit\VideoStorage\FilesystemDriver::class,
+
+    // Only required with the `FilesystemDriver`
+    'video_storage_disk' => env('FILESYSTEM_DRIVER', 'public'),
 
 ];

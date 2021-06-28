@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use SteadfastCollective\Summit\Models\Video;
 
 trait HasVideo
@@ -61,30 +60,7 @@ trait HasVideo
      */
     public function uploadVideo($file, string $path = ''): Video
     {
-        if ($file instanceof UploadedFile) {
-            $filePath = $file->storeAs("{$path}/{$file->getFilename()}", $file->getFilename(), [
-                'disk' => config('summit.videos_disk'),
-            ]);
-
-            return $this->videos()->create([
-                'file_path' => $filePath,
-                'file_name' => $file->getFilename(),
-                'file_type' => $file->getMimeType(),
-            ]);
-        }
-
-        // TODO: use a different config variable to decide if we want to use api.video
-        if (config('summit.videos_disk') === 'API_VIDEO') {
-            //
-        }
-
-        // Otherwise, assume we already have the file uploaded somewhere & just copy it instead (useful for Vapor)
-        Storage::disk(config('summit.videos_disk'))->copy($file, $filePath = "{$path}/{$file}");
-
-        return $this->videos()->create([
-            'file_path' => $filePath,
-            'file_name' => $file,
-            'file_type' => Storage::disk(config('summit.videos_disk'))->mimeType($filePath),
-        ]);
+        return resolve(config('summit.video_storage_driver'))
+            ->upload($this, $file, $path);
     }
 }

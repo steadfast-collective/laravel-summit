@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Models\Video;
 use SteadfastCollective\Summit\Tests\TestCase;
+use SteadfastCollective\Summit\VideoStorage\FilesystemDriver;
 
 class CourseBlockTest extends TestCase
 {
@@ -233,6 +235,9 @@ class CourseBlockTest extends TestCase
     /** @test */
     public function can_get_upload_video_from_uploaded_file()
     {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
@@ -254,6 +259,9 @@ class CourseBlockTest extends TestCase
     /** @test */
     public function can_get_upload_video_from_uploaded_file_with_specific_path()
     {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
