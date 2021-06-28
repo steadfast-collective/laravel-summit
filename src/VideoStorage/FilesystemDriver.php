@@ -19,7 +19,6 @@ class FilesystemDriver implements VideoStorageDriver
 
             return $courseBlock->videos()->create([
                 'file_path' => $filePath,
-                'file_name' => $file->getFilename(),
                 'file_type' => $file->getMimeType(),
             ]);
         }
@@ -29,7 +28,6 @@ class FilesystemDriver implements VideoStorageDriver
 
         return $courseBlock->videos()->create([
             'file_path' => $filePath,
-            'file_name' => $file,
             'file_type' => Storage::disk(config('summit.videos_disk'))->mimeType($filePath),
         ]);
     }

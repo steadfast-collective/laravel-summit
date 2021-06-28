@@ -25,7 +25,6 @@ class ApiVideoDriver implements VideoStorageDriver
         // TODO
         return Video::create([
             'file_path' => null,
-            'file_name' => null,
             'file_type' => null,
             'size' => null,
             'video_duration' => null,
