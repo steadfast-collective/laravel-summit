@@ -15,6 +15,7 @@ class CreateCourseBlocksTable extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->string('title')->nullable();
+            $table->enum('type', ['INTRO', 'FINISHED', 'CHAPTER', 'MILESTONE'])->default('CHAPTER');
             $table->text('description')->nullable();
             $table->text('download_file_path')->nullable();
             $table->unsignedInteger('estimated_length')->default(0)->comment('In seconds.');
