@@ -31,4 +31,9 @@ class FilesystemDriver implements VideoStorageDriver
             'file_type' => $type ?? Storage::disk(config('summit.videos_disk'))->mimeType($filePath),
         ]);
     }
+
+    public function url(Video $video): ?string
+    {
+        return Storage::disk(config('summit.videos_disk'))->url($video->file_path);
+    }
 }

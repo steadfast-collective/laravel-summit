@@ -21,12 +21,22 @@ class ApiVideoDriver implements VideoStorageDriver
 
         $getVideo = \SteadfastCollective\ApiVideo\Facades\ApiVideo::getVideo($file);
 
-        // TODO
         return Video::create([
             'file_path' => $getVideo->videoId,
             'file_type' => $type ?? null,
             'size' => null,
             'video_duration' => null,
         ]);
+    }
+
+    public function url(Video $video): ?string
+    {
+        $getVideo = \SteadfastCollective\ApiVideo\Facades\ApiVideo::getVideo($video->file_path);
+
+        if (! $getVideo) {
+            return null;
+        }
+
+        return $video->assets['player'];
     }
 }
