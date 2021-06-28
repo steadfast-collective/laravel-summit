@@ -16,6 +16,12 @@
             "email": "andre@steadfastcollective.com",
             "homepage": "https://steadfastcollective.com",
             "role": "Developer"
+        },
+        {
+            "name": "Duncan McClean",
+            "email": "duncan@steadfastcollective.com",
+            "homepage": "https://steadfastcollective.com",
+            "role": "Developer"
         }
     ],
     "require": {
