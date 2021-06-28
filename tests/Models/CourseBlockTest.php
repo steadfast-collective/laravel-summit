@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use stdClass;
+use SteadfastCollective\ApiVideo\Facades\ApiVideo;
 use SteadfastCollective\Summit\Models\Course;
 use SteadfastCollective\Summit\Models\CourseBlock;
 use SteadfastCollective\Summit\Models\Video;
 use SteadfastCollective\Summit\Tests\TestCase;
+use SteadfastCollective\Summit\VideoStorage\ApiVideoDriver;
+use SteadfastCollective\Summit\VideoStorage\FilesystemDriver;
 
 class CourseBlockTest extends TestCase
 {
@@ -226,6 +233,172 @@ class CourseBlockTest extends TestCase
 
         $this->assertTrue($getLastVideo instanceof Video);
         $this->assertSame($getLastVideo->id, $videoTwo->id);
+    }
+
+    /** @test */
+    public function can_upload_video_to_filesystem_from_uploaded_file()
+    {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile);
+
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+    }
+
+    /** @test */
+    public function can_upload_video_to_filesystem_from_uploaded_file_with_specific_path()
+    {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile, 'course-videos');
+
+        $this->assertStringContainsString('course-videos', $uploadVideo->file_path);
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+    }
+
+    /** @test */
+    public function can_upload_video_to_filesystem_from_uploaded_file_with_file_type()
+    {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile, null, 'some/random-type');
+
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+
+        $this->assertSame($uploadVideo->file_type, 'some/random-type');
+    }
+
+    /** @test */
+    public function can_upload_video_to_filesystem_from_path()
+    {
+        Config::set('summit.video_storage_driver', FilesystemDriver::class);
+        Config::set('summit.video_storage_disk', 'public');
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        $uploadedFile = UploadedFile::fake()->create('mix-video.mp4', 95, 'video/mp4');
+
+        $uploadVideo = $courseBlock->uploadVideo($uploadedFile);
+
+        $this->assertFileExists(Storage::disk(config('summit.videos_disk'))->path($uploadVideo->file_path));
+    }
+
+    /** @test */
+    public function can_upload_video_to_api_video_from_video_id()
+    {
+        Config::set('summit.video_storage_driver', ApiVideoDriver::class);
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        require_once __DIR__ . '/../__fixtures__/ApiVideo.php';
+
+        $video = new stdClass();
+        $video->videoId = 'abcd1234';
+
+        ApiVideo::shouldReceive('getVideo')->andReturn($video);
+
+        $uploadVideo = $courseBlock->uploadVideo('abcd1234');
+
+        $this->assertDatabaseHas('videos', [
+            'file_path' => 'abcd1234',
+        ]);
+    }
+
+    /** @test */
+    public function can_upload_video_to_api_video_from_video_id_with_specific_path()
+    {
+        $this->markTestIncomplete("There's nothing different when uploading videos with a path.");
+    }
+
+    /** @test */
+    public function can_upload_video_to_api_video_from_video_id_with_file_type()
+    {
+        Config::set('summit.video_storage_driver', ApiVideoDriver::class);
+
+        $course = Course::create([
+            'name' => 'Laravel Crash Course',
+            'slug' => 'laravel-crash-course',
+            'estimated_length' => 50,
+        ]);
+
+        $courseBlock = $course->courseBlocks()->create([
+            'title' => 'Mix',
+            'estimated_length' => 50,
+        ]);
+
+        require_once __DIR__ . '/../__fixtures__/ApiVideo.php';
+
+        $video = new stdClass();
+        $video->videoId = 'zzz999';
+
+        ApiVideo::shouldReceive('getVideo')->andReturn($video);
+
+        $uploadVideo = $courseBlock->uploadVideo('zzz999', null, 'some/random-type');
+
+        $this->assertDatabaseHas('videos', [
+            'file_path' => 'zzz999',
+            'file_type' => 'some/random-type',
+        ]);
     }
 
     public function course_blocks_have_an_available_scope()

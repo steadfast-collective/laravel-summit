@@ -40,4 +40,19 @@ return [
 
     'featured_image_disk' => env('FILESYSTEM_DRIVER', 'public'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Video Storage
+    |--------------------------------------------------------------------------
+    |
+    | Where should we retrieve and upload your videos? We have built-in
+    | support for Laravel's Filesystem and api.video
+    |
+    */
+
+    'video_storage_driver' => \SteadfastCollective\Summit\VideoStorage\FilesystemDriver::class,
+
+    // Only required with the `FilesystemDriver`
+    'video_storage_disk' => env('FILESYSTEM_DRIVER', 'public'),
+
 ];

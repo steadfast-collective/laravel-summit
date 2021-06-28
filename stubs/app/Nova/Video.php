@@ -22,7 +22,7 @@ class Video extends Resource
      *
      * @var string
      */
-    public static $title = 'file_name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -30,7 +30,7 @@ class Video extends Resource
      * @var array
      */
     public static $search = [
-        'file_name',
+        'id',
     ];
 
     /**

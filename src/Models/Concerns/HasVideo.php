@@ -5,6 +5,7 @@ namespace SteadfastCollective\Summit\Models\Concerns;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Http\UploadedFile;
 use SteadfastCollective\Summit\Models\Video;
 
 trait HasVideo
@@ -49,5 +50,17 @@ trait HasVideo
     public function getLastVideo() : Video
     {
         return $this->videos()->latest()->first();
+    }
+
+    /**
+     * @param UploadedFile|string $file
+     * @param string $path
+     *
+     * @return Video
+     */
+    public function uploadVideo($file, $path = null, $type = null): Video
+    {
+        return resolve(config('summit.video_storage_driver'))
+            ->upload($this, $file, $path, $type);
     }
 }

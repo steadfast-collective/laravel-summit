@@ -67,4 +67,10 @@ class Video extends Model
 
         return '0 bytes';
     }
+
+    public function getUrlAttribute()
+    {
+        return resolve(config('summit.video_storage_driver'))
+            ->url($this);
+    }
 }
