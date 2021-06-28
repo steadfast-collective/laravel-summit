@@ -62,6 +62,35 @@ class Course extends SummitCourse
 }
 ```
 
+Depending on the model you're overriding, it may be necessary to tell Summit about your updated model. You can do this inside the configuration file published by Summit during install.
+
+```php
+/*
+|--------------------------------------------------------------------------
+| Course Model
+|--------------------------------------------------------------------------
+|
+| Which class should we reference as the course model? It's used
+| to store and retrieve the courses.
+|
+*/
+
+'course_model' => \SteadfastCollective\Summit\Models\Course::class,
+
+/*
+|--------------------------------------------------------------------------
+| User Model
+|--------------------------------------------------------------------------
+|
+| Which class should we reference as the user model? It'll be used when
+| associating course blocks with users (for tracking their progress).
+| If null, we'll fallback to the model used in your `auth.php` file.
+|
+*/
+
+'user_model' => null,
+```
+
 ### Laravel Nova
 
 If you're using Laravel Nova within your application, you can optionally publish our base Nova resources. They're included as part of the `summit:install` command. However, they will only be shown if we detect Nova is installed.
