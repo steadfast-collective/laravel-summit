@@ -20,7 +20,6 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
-            'estimated_length' => 3600,
             'start_date' => now()->addWeeks(2),
             'publish_date' => now()->subDay(),
         ]);
@@ -29,7 +28,6 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Connect',
             'slug' => 'how-to-use-stripe-connect',
             'description' => 'This is a course about Stripe Connect.',
-            'estimated_length' => 3600,
             'start_date' => now()->addWeeks(2),
             'publish_date' => null,
         ]);
@@ -45,7 +43,6 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
-            'estimated_length' => 3600,
             'start_date' => now(),
             'publish_date' => now(),
         ]);
@@ -54,7 +51,6 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Connect',
             'slug' => 'how-to-use-stripe-connect',
             'description' => 'This is a course about Stripe Connect.',
-            'estimated_length' => 3600,
             'start_date' => now()->addWeeks(2),
             'publish_date' => now(),
         ]);
@@ -70,7 +66,6 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
-            'estimated_length' => 3600,
             'start_date' => now(),
             'publish_date' => now(),
         ]);
@@ -79,7 +74,6 @@ class CourseTest extends TestCase
             'title' => 'Installing Stripe CLI',
             'description' => 'How to get started with Stripe development using the Stripe CLI.',
             'download_file_path' => null,
-            'estimated_length' => 600,
             'order' => 1,
             'available_from' => now(),
         ]);
@@ -97,9 +91,12 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
-            'estimated_length' => 3600,
             'start_date' => now(),
             'publish_date' => now(),
+        ]);
+
+        $course->courseBlocks()->create([
+            'estimated_length' => 3600,
         ]);
 
         $this->assertSame($course->readable_estimated_length, '1 hour');
@@ -112,19 +109,16 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Billing',
             'slug' => 'how-to-use-stripe-billing',
             'description' => 'This is a course about Stripe Billing.',
-            'estimated_length' => 3600,
             'start_date' => now(),
             'publish_date' => now(),
         ]);
 
         $courseBlockOne = $course->courseBlocks()->create([
             'title' => 'Creating products',
-            'estimated_length' => 1800,
         ]);
 
         $courseBlockTwo = $course->courseBlocks()->create([
             'title' => 'Setting up for customers',
-            'estimated_length' => 1800,
         ]);
 
         $user = User::create([
@@ -154,19 +148,16 @@ class CourseTest extends TestCase
             'name' => 'How to use Stripe Billing',
             'slug' => 'how-to-use-stripe-billing',
             'description' => 'This is a course about Stripe Billing.',
-            'estimated_length' => 3600,
             'start_date' => now(),
             'publish_date' => now(),
         ]);
 
         $courseBlockOne = $course->courseBlocks()->create([
             'title' => 'Creating products',
-            'estimated_length' => 1800,
         ]);
 
         $courseBlockTwo = $course->courseBlocks()->create([
             'title' => 'Setting up for customers',
-            'estimated_length' => 1800,
         ]);
 
         $progress = $course->progress_percentage;

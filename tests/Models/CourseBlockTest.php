@@ -31,7 +31,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -49,7 +48,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -78,7 +76,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -100,7 +97,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -123,7 +119,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -150,7 +145,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -181,7 +175,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -211,7 +204,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -244,7 +236,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -268,7 +259,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -293,7 +283,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -319,7 +308,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -342,7 +330,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -378,7 +365,6 @@ class CourseBlockTest extends TestCase
         $course = Course::create([
             'name' => 'Laravel Crash Course',
             'slug' => 'laravel-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $courseBlock = $course->courseBlocks()->create([
@@ -407,7 +393,6 @@ class CourseBlockTest extends TestCase
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
-            'estimated_length' => 3600,
             'start_date' => now()->addWeeks(2),
             'publish_date' => now()->subDay(),
         ]);
@@ -442,7 +427,6 @@ class CourseBlockTest extends TestCase
             'name' => 'How to use Stripe Checkout',
             'slug' => 'how-to-use-stripe-checkout',
             'description' => 'This is a course about Stripe Checkout.',
-            'estimated_length' => 3600,
             'start_date' => now()->addWeeks(2),
             'publish_date' => now()->subDay(),
         ]);

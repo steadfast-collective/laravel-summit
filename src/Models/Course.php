@@ -18,7 +18,6 @@ class Course extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'estimated_length' => 'integer',
         'start_date' => 'datetime',
         'publish_date' => 'datetime',
     ];
@@ -81,5 +80,10 @@ class Course extends Model
         $progress = ($finishedCourseBlocks / $totalCourseBlocks) * 100;
 
         return round($progress) . '%';
+    }
+
+    public function getEstimatedLengthAttribute()
+    {
+        return $this->courseBlocks()->sum('estimated_length');
     }
 }

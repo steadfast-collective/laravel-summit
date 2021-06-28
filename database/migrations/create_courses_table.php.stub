@@ -16,7 +16,6 @@ class CreateCoursesTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->unsignedInteger('estimated_length')->default(0)->comment('In seconds.');
             $table->text('featured_image_path')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('publish_date')->nullable();

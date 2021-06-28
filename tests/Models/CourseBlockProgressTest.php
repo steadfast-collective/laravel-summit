@@ -22,7 +22,6 @@ class CourseBlockProgressTest extends TestCase
         $this->course = Course::create([
             'name' => 'Statamic Crash Course',
             'slug' => 'statamic-crash-course',
-            'estimated_length' => 50,
         ]);
 
         $this->courseBlock = $this->course->courseBlocks()->create([
