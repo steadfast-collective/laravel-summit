@@ -17,7 +17,7 @@ class CreateVideosTable extends Migration
             $table->text('file_path')->nullable();
             $table->string('file_type')->nullable();
             $table->unsignedBigInteger('size')->nullable();
-            $table->unsignedInteger('video_duration')->default(0)->comment('In seconds.');
+            $table->unsignedInteger('video_duration')->default(0)->comment('In seconds.')->nullable();
             $table->nullableTimestamps();
         });
     }

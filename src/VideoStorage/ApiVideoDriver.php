@@ -15,7 +15,7 @@ class ApiVideoDriver implements VideoStorageDriver
             throw new \Exception("The api.video storage driver can't upload an `UploadedFile`. Please pass in a Video ID instead.");
         }
 
-        if (! class_exists('SteadfastCollective\ApiVideo\ApiVideo')) {
+        if (! class_exists('SteadfastCollective\ApiVideo\Facades\ApiVideo')) {
             throw new \Exception("To use api.video, please install our api.video package: `composer require steadfastcollective/laravel-api-video`");
         }
 
