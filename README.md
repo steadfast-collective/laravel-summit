@@ -2,13 +2,13 @@
 
 <p align="center">
     <a href="https://packagist.org/packages/steadfastcollective/summit">
-        <img src="https://img.shields.io/packagist/dt/steadfastcollective/summit" alt="Total Downloads">
+        <img src="https://img.shields.io/packagist/dt/steadfastcollective/laravel-summit" alt="Total Downloads">
     </a>
     <a href="https://packagist.org/packages/steadfastcollective/summit">
-        <img src="https://img.shields.io/packagist/v/steadfastcollective/summit" alt="Latest Stable Version">
+        <img src="https://img.shields.io/packagist/v/steadfastcollective/laravel-summit" alt="Latest Stable Version">
     </a>
     <a href="https://packagist.org/packages/steadfastcollective/summit">
-        <img src="https://img.shields.io/packagist/l/steadfastcollective/summit" alt="License">
+        <img src="https://img.shields.io/packagist/l/steadfastcollective/laravel-summit" alt="License">
     </a>
 </p>
 
