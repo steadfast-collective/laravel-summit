@@ -51,18 +51,21 @@ class CourseBlock extends Resource
             ID::make(__('ID'), 'id')->sortable(),
 
             Text::make('Title')
-                ->required(),
+                ->rules('required', 'string', 'max:255'),
 
             Textarea::make('Description')
                 ->hideFromIndex()
-                ->alwaysShow(),
+                ->alwaysShow()
+                ->rules('nullable'),
 
             Number::make('Estimated Length')
-                ->help('In seconds.'),
+                ->help('In seconds.')
+                ->rules('nullable', 'integer'),
 
             File::make('File Download', 'download_file_path')
                 ->path('block-downloads')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->rules('nullable'),
 
             BelongsTo::make('Course', 'course', \App\Nova\Course::class),
 

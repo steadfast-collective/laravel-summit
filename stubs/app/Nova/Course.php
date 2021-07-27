@@ -49,23 +49,28 @@ class Course extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            Text::make('Name'),
+            Text::make('Name')
+                ->rules('required', 'string', 'max:255'),
 
             Slug::make('Slug')
                 ->from('Name')
-                ->help('This slug is used to form URLs on the website'),
+                ->rules('required')
+                ->creationRules('unique:courses,slug')
+                ->updateRules('unique:courses,slug,{{resourceId}}'),
 
             Textarea::make('Description')
                 ->alwaysShow(),
 
-            Number::make('Estimated Length')
-                ->help('In seconds.'),
+            Image::make('Featured Image', 'featured_image_file_path')
+                ->rules('nullable'),
+            
+            Text::make('Estimated Length', fn () => $this->resource->readable_estimated_length)->asHtml(),
 
-            Image::make('Featured Image', 'featured_image_file_path'),
+            DateTime::make('Start Date')
+                ->rules('nullable'),
 
-            DateTime::make('Start Date'),
-
-            DateTime::make('Publish Date'),
+            DateTime::make('Publish Date')
+                ->rules('nullable'),
 
             HasMany::make('Blocks', 'blocks', \App\Nova\CourseBlock::class),
         ];
