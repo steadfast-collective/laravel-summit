@@ -16,6 +16,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Course Block Model
+    |--------------------------------------------------------------------------
+    |
+    | Which class should we reference as the course block model? It's used
+    | to store and retrieve the course blocks.
+    |
+    */
+
+    'course_block_model' => \SteadfastCollective\Summit\Models\CourseBlock::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | User Model
     |--------------------------------------------------------------------------
     |

@@ -24,7 +24,7 @@ class Course extends Model
 
     public function courseBlocks() : HasMany
     {
-        return $this->hasMany(CourseBlock::class);
+        return $this->hasMany(config('summit.course_block_model'), 'course_id');
     }
 
     public function scopePublished(Builder $query) : Builder
@@ -41,7 +41,25 @@ class Course extends Model
             ->where('start_date', '<=', now());
     }
 
-    public function getReadableEstimatedLengthAttribute()
+    public function scopeWithProgress(Builder $query, int $userId) : Builder
+    {
+        return $query
+            ->leftJoin('course_blocks', 'courses.id', '=', 'course_blocks.course_id')
+            ->leftJoin('course_block_user', function ($join) use ($userId) {
+                $join->on('course_block_user.course_block_id', '=', 'course_blocks.id')
+                        ->where('course_block_user.user_id', '=', $userId)
+                        ->whereNotNull('finished_at');
+            })
+            ->groupBy('courses.id')
+            ->select('courses.*', DB::raw('COUNT(course_block_user.user_id) as user_progress_count'), DB::raw('ROUND(((COUNT(course_block_user.user_id) / COUNT(course_blocks.id)) * 100)) as user_progress_percentage'));
+    }
+
+    public function getUserProgressPercentageAttribute($value)
+    {
+        return $value.'%';
+    }
+
+    public function getReadableEstimatedLengthAttribute() : string
     {
         $seconds = $this->estimated_length;
 
@@ -57,6 +75,25 @@ class Course extends Model
             })
             ->map(function ($item, $key) {
                 return "{$item} ".Str::plural($key, $item);
+            })
+            ->implode(' ');
+    }
+
+    public function getShortReadableEstimatedLengthAttribute() : string
+    {
+        $seconds = $this->estimated_length;
+
+        $units = collect([
+            'h'   => floor($seconds / 60 / 60),
+            'm'   => floor(($seconds % (60 * 60)) / 60),
+        ]);
+
+        return $units
+            ->filter(function ($value) {
+                return $value > 0;
+            })
+            ->map(function ($item, $key) {
+                return $item.$key;
             })
             ->implode(' ');
     }
@@ -90,5 +127,10 @@ class Course extends Model
     public function getChaptersCountAttribute()
     {
         return $this->courseBlocks()->where('type', 'CHAPTER')->count();
+    }
+
+    public function getExcerptAttribute() : string
+    {
+        return Str::limit($this->description, 280);
     }
 }
