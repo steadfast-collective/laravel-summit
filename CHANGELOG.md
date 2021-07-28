@@ -8,7 +8,7 @@
 
 * Updated Nova Stubs (`Course` & `CourseBlock`)
 
-## v1.2.0 (2021-07-27)
+## v1.2.0 (2021-07-28)
 
 * Added ability to set `course_block_model` in the config
 * Added foreign key to relationships in models
