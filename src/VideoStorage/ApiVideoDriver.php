@@ -31,9 +31,9 @@ class ApiVideoDriver implements VideoStorageDriver
 
     public function url(Video $video): ?string
     {
-        $getVideo = \SteadfastCollective\ApiVideo\Facades\ApiVideo::getVideo($video->file_path);
+        $video = \SteadfastCollective\ApiVideo\Facades\ApiVideo::getVideo($video->file_path);
 
-        if (! $getVideo) {
+        if (! $video) {
             return null;
         }
 

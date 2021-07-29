@@ -34,3 +34,7 @@
 ## v1.3.3 (2021-07-29)
 
 * Fixes error in `getReadableSizeAttribute` when video size column is null
+
+## v1.3.4 (2021-07-29)
+
+* Fixes variable typo in `ApiVideoDriver` class
