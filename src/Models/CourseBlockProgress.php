@@ -22,24 +22,32 @@ class CourseBlockProgress extends Pivot
 
     public function getTimeLeftAttribute()
     {
-        $videoLength = Video::where('model_type', config('summit.course_block_model'))->where('model_id', $this->course_block_id)->sum('video_duration');
+        $totalLength = $this->courseBlock->estimated_length;
 
-        if ($videoLength <= 0) {
+        if (!$totalLength) {
+            $totalLength = Video::where('model_type', config('summit.course_block_model'))->where('model_id', $this->course_block_id)->sum('video_duration');
+        }
+
+        if ($totalLength <= 0) {
             return '0 seconds';
         }
 
-        return CarbonInterval::seconds($videoLength - $this->progress)->cascade()->forHumans();
+        return CarbonInterval::seconds($totalLength - $this->progress)->cascade()->forHumans();
     }
 
     public function getProgressPercentageAttribute()
     {
-        $videoLength = Video::where('model_type', config('summit.course_block_model'))->where('model_id', $this->course_block_id)->sum('video_duration');
+        $totalLength = $this->courseBlock->estimated_length;
+        
+        if (!$totalLength) {
+            $totalLength = Video::where('model_type', config('summit.course_block_model'))->where('model_id', $this->course_block_id)->sum('video_duration');
+        }
 
-        if ($videoLength <= 0) {
+        if ($totalLength <= 0) {
             return '0%';
         }
 
-        return round($this->progress / $videoLength) . '%';
+        return round($this->progress / $totalLength) . '%';
     }
 
     public function courseBlock()

@@ -26,3 +26,7 @@
 ## v1.3.1 (2021-07-29)
 
 * Fixed missing DB Facade import
+
+## v1.4.0 (2021-07-29)
+
+* Use course block estimated length as default for calculating user progress
