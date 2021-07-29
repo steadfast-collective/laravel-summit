@@ -22,3 +22,7 @@
 
 * Added slug field to course blocks
 * Removed nullable from title column in `create_course_blocks_table` migration
+
+## v1.3.1 (2021-07-29)
+
+* Fixed missing DB Facade import
