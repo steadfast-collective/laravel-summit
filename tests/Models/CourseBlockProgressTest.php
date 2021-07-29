@@ -26,6 +26,7 @@ class CourseBlockProgressTest extends TestCase
 
         $this->courseBlock = $this->course->courseBlocks()->create([
             'title' => 'Collections & Entries',
+            'slug' => 'collections-and-entries',
             'estimated_length' => 50,
         ]);
     }

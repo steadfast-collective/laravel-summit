@@ -72,6 +72,7 @@ class CourseTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Installing Stripe CLI',
+            'slug' => 'installing-stripe-cli',
             'description' => 'How to get started with Stripe development using the Stripe CLI.',
             'download_file_path' => null,
             'order' => 1,
@@ -96,6 +97,8 @@ class CourseTest extends TestCase
         ]);
 
         $course->courseBlocks()->create([
+            'title' => 'Setting up Stripe Checkout',
+            'slug' => 'setting-up-stripe-checkout',
             'estimated_length' => 3600,
         ]);
 
@@ -115,10 +118,12 @@ class CourseTest extends TestCase
 
         $courseBlockOne = $course->courseBlocks()->create([
             'title' => 'Creating products',
+            'slug' => 'creating-products',
         ]);
 
         $courseBlockTwo = $course->courseBlocks()->create([
             'title' => 'Setting up for customers',
+            'slug' => 'setting-up-for-customers',
         ]);
 
         $user = User::create([
@@ -154,10 +159,12 @@ class CourseTest extends TestCase
 
         $courseBlockOne = $course->courseBlocks()->create([
             'title' => 'Creating products',
+            'slug' => 'creating-products',
         ]);
 
         $courseBlockTwo = $course->courseBlocks()->create([
             'title' => 'Setting up for customers',
+            'slug' => 'setting-up-for-customers',
         ]);
 
         $progress = $course->progress_percentage;
@@ -179,11 +186,13 @@ class CourseTest extends TestCase
 
         $courseBlockOne = $course->courseBlocks()->create([
             'title' => 'Creating products',
+            'slug' => 'creating-products',
             'type' => 'CHAPTER',
         ]);
 
         $courseBlockTwo = $course->courseBlocks()->create([
             'title' => 'Setting up for customers',
+            'slug' => 'setting-up-for-customers',
             'type' => 'INTRO',
         ]);
 

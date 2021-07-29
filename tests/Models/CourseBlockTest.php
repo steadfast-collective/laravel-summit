@@ -35,6 +35,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Eloquent',
+            'slug' => 'eloquent',
             'estimated_length' => 50,
         ]);
 
@@ -52,6 +53,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Migrations',
+            'slug' => 'migrations',
             'estimated_length' => 50,
         ]);
 
@@ -80,6 +82,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Notifications',
+            'slug' => 'notifications',
             'estimated_length' => 50,
         ]);
 
@@ -101,6 +104,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Broadcasting',
+            'slug' => 'broadcasting',
             'estimated_length' => 50,
         ]);
 
@@ -123,6 +127,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Events',
+            'slug' => 'events',
             'estimated_length' => 50,
         ]);
 
@@ -149,6 +154,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Forge',
+            'slug' => 'forge',
             'estimated_length' => 50,
         ]);
 
@@ -179,6 +185,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Horizon',
+            'slug' => 'horizon',
             'estimated_length' => 50,
         ]);
 
@@ -208,6 +215,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Telescope',
+            'slug' => 'telescope',
             'estimated_length' => 50,
         ]);
 
@@ -240,6 +248,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Mix',
+            'slug' => 'mix',
             'estimated_length' => 50,
         ]);
 
@@ -263,6 +272,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Mix',
+            'slug' => 'mix',
             'estimated_length' => 50,
         ]);
 
@@ -287,6 +297,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Mix',
+            'slug' => 'mix',
             'estimated_length' => 50,
         ]);
 
@@ -312,6 +323,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Mix',
+            'slug' => 'mix',
             'estimated_length' => 50,
         ]);
 
@@ -334,6 +346,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Mix',
+            'slug' => 'mix',
             'estimated_length' => 50,
         ]);
 
@@ -369,6 +382,7 @@ class CourseBlockTest extends TestCase
 
         $courseBlock = $course->courseBlocks()->create([
             'title' => 'Mix',
+            'slug' => 'mix',
             'estimated_length' => 50,
         ]);
 
@@ -434,6 +448,7 @@ class CourseBlockTest extends TestCase
         $courseBlocks = $course->courseBlocks()->createMany([
             [
                 'title' => 'Installing Stripe CLI',
+                'slug' => 'installing-stripe-cli',
                 'description' => 'How to get started with Stripe development using the Stripe CLI.',
                 'download_file_path' => null,
                 'estimated_length' => 600,
@@ -442,6 +457,7 @@ class CourseBlockTest extends TestCase
             ],
             [
                 'title' => 'Creating Stripe Checkout Session',
+                'slug' => 'creating-stripe-checkout-session',
                 'description' => 'How to create a new Stripe Checkout Session.',
                 'download_file_path' => null,
                 'estimated_length' => 3600,
