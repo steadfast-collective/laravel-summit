@@ -30,3 +30,7 @@
 ## v1.3.2 (2021-07-29)
 
 * Use course block estimated length as default for calculating user progress
+
+## v1.3.3 (2021-07-29)
+
+* Fixes error in `getReadableSizeAttribute` when video size column is null

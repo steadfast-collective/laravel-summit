@@ -30,6 +30,10 @@ class Video extends Model
      */
     public function getReadableSizeAttribute() : string
     {
+        if (is_null($this->size)) {
+            return '';
+        }
+        
         return $this->getHumanReadableSize($this->size);
     }
 
