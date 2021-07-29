@@ -9,7 +9,6 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\DateTime;
 
 class Course extends Resource

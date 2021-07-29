@@ -17,3 +17,8 @@
 * Added `getExcerptAttribute` in `Course.php` and `CourseBlock.php`
 * Added `getFormattedEstimatedLengthAttribute` in `CourseBlock.php`
 * Updated `getTimeLeftAttribute` in `CourseBlockProgress.php`
+
+## v1.3.0 (2021-07-29)
+
+* Added slug field to course blocks
+* Removed nullable from title column in `create_course_blocks_table` migration

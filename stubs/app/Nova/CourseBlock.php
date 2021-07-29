@@ -3,14 +3,15 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\File;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Slug;
 
 class CourseBlock extends Resource
 {
@@ -52,6 +53,12 @@ class CourseBlock extends Resource
 
             Text::make('Title')
                 ->rules('required', 'string', 'max:255'),
+            
+            Slug::make('Slug')
+                ->from('Title')
+                ->rules('required')
+                ->creationRules('unique:course_blocks,slug')
+                ->updateRules('unique:course_blocks,slug,{{resourceId}}'),
 
             Textarea::make('Description')
                 ->hideFromIndex()

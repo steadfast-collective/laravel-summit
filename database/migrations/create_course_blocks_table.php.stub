@@ -14,7 +14,8 @@ class CreateCourseBlocksTable extends Migration
         Schema::create('course_blocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
-            $table->string('title')->nullable();
+            $table->string('title');
+            $table->string('slug');
             $table->enum('type', ['INTRO', 'FINISHED', 'CHAPTER', 'MILESTONE'])->default('CHAPTER');
             $table->text('description')->nullable();
             $table->text('download_file_path')->nullable();
