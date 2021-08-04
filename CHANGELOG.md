@@ -38,3 +38,7 @@
 ## v1.3.4 (2021-07-29)
 
 * Fixes variable typo in `ApiVideoDriver` class
+
+## v1.3.5 (2021-08-04)
+
+* Fixes progress percentage attribute in `CourseBlockProgress`

@@ -47,7 +47,7 @@ class CourseBlockProgress extends Pivot
             return '0%';
         }
 
-        return round($this->progress / $totalLength) . '%';
+        return round($this->progress / $totalLength * 100).'%';
     }
 
     public function courseBlock()
