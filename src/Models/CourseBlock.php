@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 use SteadfastCollective\Summit\Models\Concerns\HasAuthModel;
 use SteadfastCollective\Summit\Models\Concerns\HasVideo;
 
-class CourseBlock extends Model
+class CourseBlock extends Model implements Sortable
 {
-    use HasVideo, HasAuthModel;
+    use HasVideo, HasAuthModel, SortableTrait;
 
     protected $table = 'course_blocks';
 
@@ -22,6 +24,11 @@ class CourseBlock extends Model
         'order'            => 'integer',
         'estimated_length' => 'integer',
         'available_from'   => 'datetime',
+    ];
+
+    public $sortable = [
+        'order_column_name'  => 'order',
+        'sort_when_creating' => true,
     ];
 
     public function course(): BelongsTo
@@ -78,5 +85,10 @@ class CourseBlock extends Model
     public function getExcerptAttribute()
     {
         return Str::limit($this->description, 280);
+    }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('course_id', $this->course_id);
     }
 }

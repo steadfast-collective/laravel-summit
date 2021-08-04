@@ -42,3 +42,7 @@
 ## v1.3.5 (2021-08-04)
 
 * Fixes progress percentage attribute in `CourseBlockProgress`
+
+## v1.4.0 (2021-08-04)
+
+* Implement ordering of Course Blocks automatically on creating

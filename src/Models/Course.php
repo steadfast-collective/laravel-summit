@@ -25,7 +25,7 @@ class Course extends Model
 
     public function courseBlocks() : HasMany
     {
-        return $this->hasMany(config('summit.course_block_model'), 'course_id');
+        return $this->hasMany(config('summit.course_block_model'), 'course_id')->oldest('order');
     }
 
     public function scopePublished(Builder $query) : Builder

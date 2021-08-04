@@ -113,6 +113,8 @@ php artisan summit:install
 
 The Nova Resources will be published into your `app/Nova` directory. Once published, you can customise them to your heart's content.
 
+We're using [Spatie's Eloquent Sortable](https://github.com/spatie/eloquent-sortable) package to handle ordering of course blocks when creating. To extend on this functionality with Laravel Nova, we suggest using the [Nova Sortable](https://novapackages.com/packages/optimistdigital/nova-sortable) package.
+
 ### Video Storage
 
 There's a couple of different places you can store your videos. Out of the box, we currently support uploading to [Laravel's Filesystem](https://laravel.com/docs/master/filesystem) and to [api.video](https://api.video/).
