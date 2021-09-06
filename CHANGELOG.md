@@ -46,3 +46,7 @@
 ## v1.4.0 (2021-08-04)
 
 * Implement ordering of Course Blocks automatically on creating
+
+## v1.4.1 (2021-09-06)
+
+* Fixes issue with `user` relationship on `CourseBlockProgress` model
