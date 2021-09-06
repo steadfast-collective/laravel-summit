@@ -101,4 +101,32 @@ class CourseBlockProgressTest extends TestCase
 
         $this->assertSame((int) $courseBlockProgress->pivot->user_id, $user->id);
     }
+
+    /** @test */
+    public function can_get_user_relationship()
+    {
+        $videoOne = $this->courseBlock->videos()->create([
+            'video_duration' => 25,
+        ]);
+
+        $videoTwo = $this->courseBlock->videos()->create([
+            'video_duration' => 25,
+        ]);
+
+        $user = User::create([
+            'name' => 'Test',
+            'email' => 'test@steadfastcollective.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $this->courseBlock->users()->attach($user, [
+            'started_at' => now()->subMinutes(5),
+            'progress' => 20,
+        ]);
+
+        $user = $this->courseBlock->users->first()->pivot->user;
+
+        $this->assertTrue($user instanceof \App\Models\User);
+        $this->assertSame($user->email, 'test@steadfastcollective.com');
+    }
 }
