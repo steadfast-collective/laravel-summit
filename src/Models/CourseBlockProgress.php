@@ -4,9 +4,12 @@ namespace SteadfastCollective\Summit\Models;
 
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use SteadfastCollective\Summit\Models\Concerns\HasAuthModel;
 
 class CourseBlockProgress extends Pivot
 {
+    use HasAuthModel;
+
     protected $table = 'course_block_user';
 
     protected $casts = [
@@ -57,8 +60,6 @@ class CourseBlockProgress extends Pivot
 
     public function user()
     {
-        $userModel = config('summit.user_model') ?? config('auth.providers.users.model');
-
-        return $this->belongsTo($userModel, 'user_id');
+        return $this->belongsTo($this->getAuthModelClass(), 'user_id');
     }
 }
