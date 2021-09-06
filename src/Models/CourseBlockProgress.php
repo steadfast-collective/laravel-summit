@@ -38,7 +38,7 @@ class CourseBlockProgress extends Pivot
     public function getProgressPercentageAttribute()
     {
         $totalLength = $this->courseBlock->estimated_length;
-        
+
         if (!$totalLength) {
             $totalLength = Video::where('model_type', config('summit.course_block_model'))->where('model_id', $this->course_block_id)->sum('video_duration');
         }
@@ -57,6 +57,8 @@ class CourseBlockProgress extends Pivot
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        $userModel = config('summit.user_model') ?? config('auth.providers.users.model');
+
+        return $this->belongsTo($userModel, 'user_id');
     }
 }
