@@ -50,3 +50,7 @@
 ## v1.4.1 (2021-09-06)
 
 * Fixes issue with `user` relationship on `CourseBlockProgress` model
+
+## v2.0.0 (2022-10-28)
+
+* Added support for Laravel 9
