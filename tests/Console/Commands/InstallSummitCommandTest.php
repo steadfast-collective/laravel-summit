@@ -31,18 +31,12 @@ class InstallSummitCommandTest extends TestCase
             ->expectsConfirmation("Publish config?", 'no')
             ->expectsConfirmation("Publish migrations?", 'yes');
 
-        $datePrefix = date('Y_m_d_His', time());
+        $publishedMigrations = $this->publishMigrations();
 
-        $migrations = collect(File::allFiles(database_path('migrations')))
-            ->map(function ($file) {
-                return $file->getFilename();
-            })
-            ->toArray();
-
-        $this->assertTrue(in_array("{$datePrefix}_create_course_block_user_table.php", $migrations));
-        $this->assertTrue(in_array("{$datePrefix}_create_course_blocks_table.php", $migrations));
-        $this->assertTrue(in_array("{$datePrefix}_create_courses_table.php", $migrations));
-        $this->assertTrue(in_array("{$datePrefix}_create_videos_table.php", $migrations));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->format('Y_m_d_His')}_create_courses_table.php", $publishedMigrations['migrations']));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->format('Y_m_d_His')}_create_videos_table.php", $publishedMigrations['migrations']));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->addSeconds(60)->format('Y_m_d_His')}_create_course_blocks_table.php", $publishedMigrations['migrations']));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->addSeconds(120)->format('Y_m_d_His')}_create_course_block_user_table.php", $publishedMigrations['migrations']));
     }
 
     /** @test */
@@ -80,18 +74,12 @@ class InstallSummitCommandTest extends TestCase
         $this->assertFileExists(config_path('summit.php'));
 
         // Migration assertions
-        $datePrefix = date('Y_m_d_His', time());
+        $publishedMigrations = $this->publishMigrations();
 
-        $migrations = collect(File::allFiles(database_path('migrations')))
-            ->map(function ($file) {
-                return $file->getFilename();
-            })
-            ->toArray();
-
-        $this->assertTrue(in_array("{$datePrefix}_create_course_block_user_table.php", $migrations));
-        $this->assertTrue(in_array("{$datePrefix}_create_course_blocks_table.php", $migrations));
-        $this->assertTrue(in_array("{$datePrefix}_create_courses_table.php", $migrations));
-        $this->assertTrue(in_array("{$datePrefix}_create_videos_table.php", $migrations));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->format('Y_m_d_His')}_create_courses_table.php", $publishedMigrations['migrations']));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->format('Y_m_d_His')}_create_videos_table.php", $publishedMigrations['migrations']));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->addSeconds(60)->format('Y_m_d_His')}_create_course_blocks_table.php", $publishedMigrations['migrations']));
+        $this->assertTrue(in_array("{$publishedMigrations['date_prefix']->addSeconds(120)->format('Y_m_d_His')}_create_course_block_user_table.php", $publishedMigrations['migrations']));
 
         // Nova assertions
         $this->assertFileExists(app_path('Nova/Course.php'));
@@ -118,5 +106,18 @@ class InstallSummitCommandTest extends TestCase
             File::delete(app_path('Nova/CourseBlock.php'));
             File::delete(app_path('Nova/Video.php'));
         }
+    }
+
+    protected function publishMigrations(): array
+    {
+        $datePrefix = now()->toImmutable();
+
+        $migrations = collect(File::allFiles(database_path('migrations')))
+            ->map(function ($file) {
+                return $file->getFilename();
+            })
+            ->toArray();
+
+        return ['date_prefix' => $datePrefix, 'migrations' => $migrations];
     }
 }
