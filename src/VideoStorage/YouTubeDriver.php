@@ -11,8 +11,12 @@ class YouTubeDriver
 {
     const YOUTUBE_URL = 'https://www.youtube.com/watch?v=';
 
-    public static function url(string $video): ?string
+    public static function url(?string $video): ?string
     {
-        return self::YOUTUBE_URL.$video;
+        if ($video) {
+            return self::YOUTUBE_URL.$video; 
+        }
+        
+        return null;
     }
 }
